@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Link } from 'gatsby'
-
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -21,19 +19,24 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/Home'
 import ListIcon from '@material-ui/icons/ViewList'
+import { Grid, Button, Badge } from '@material-ui/core'
+import { Link } from 'gatsby-theme-material-ui'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
 const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    flexGrow: 1,
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    background: 'linear-gradient(to right,  #663399, #5B72FF)',
+    borderTop: `5px solid ${theme.palette.secondary.main}`,
+    background: theme.palette.primary.main,
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -45,6 +48,9 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
   },
   hide: {
     display: 'none',
@@ -106,7 +112,7 @@ const Header = ({ siteTitle }) => {
         })}
       >
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="Open drawer"
             onClick={handleDrawerOpen}
@@ -114,50 +120,26 @@ const Header = ({ siteTitle }) => {
             className={clsx(classes.menuButton, open && classes.hide)}
           >
             <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit">
+          </IconButton> */}
+          <Typography className={classes.title} variant="h6" color="inherit">
             {siteTitle}
           </Typography>
+          <Button component={Link} to="/shop">
+            Shop
+          </Button>
+          <Button component={Link} to="/about">
+            About
+          </Button>
+          <Button component={Link} to="/contact">
+            Contact
+          </Button>
+          <IconButton component={Link} to="/cart">
+            <Badge variant="standard" color="secondary" badgeContent={2}>
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <Link to="/">
-            <ListItem button>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText>Home</ListItemText>
-            </ListItem>
-          </Link>
-          <Link to="/components">
-            <ListItem button>
-              <ListItemIcon>
-                <ListIcon />
-              </ListItemIcon>
-              <ListItemText>Components</ListItemText>
-            </ListItem>
-          </Link>
-        </List>
-      </Drawer>
     </div>
   )
 }

@@ -4,4 +4,6 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-require('typeface-roboto');
+import muiRootWrapper from './src/mui-root-wrapper'
+export const wrapRootElement = muiRootWrapper
+require('typeface-roboto')

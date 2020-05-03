@@ -7,10 +7,13 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StaticQuery, graphql } from 'gatsby'
+import { StaticQuery, graphql, Link } from 'gatsby'
 
 import Header from './header'
 import './layout.css'
+import { ThemeProvider } from '@material-ui/styles'
+import theme from '../theme'
+import { Grid, Typography } from '@material-ui/core'
 
 const Layout = ({ children }) => {
   return (
@@ -37,9 +40,26 @@ const Layout = ({ children }) => {
           >
             <main>{children}</main>
             <footer style={{ paddingTop: 10 }}>
-              © {new Date().getFullYear()}, Built with
-              {` `}
-              <a href="https://www.gatsbyjs.org">Gatsby</a>
+              <Grid spacing={4} justify="center" container>
+                <Grid item xs={12}>
+                  <Grid container justify="space-around">
+                    <Grid item>
+                      <Link to="/shop">Shop</Link>
+                    </Grid>
+                    <Grid item>
+                      <Link to="/about">About</Link>
+                    </Grid>
+                    <Grid item>
+                      <Link to="/contact">Contact</Link>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <Typography variant="p" align="center">
+                    © {new Date().getFullYear()}, Izzy Louise Davis
+                  </Typography>
+                </Grid>
+              </Grid>
             </footer>
           </div>
         </div>
