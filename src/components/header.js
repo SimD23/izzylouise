@@ -1,28 +1,17 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useContext } from 'react'
 
-import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import HomeIcon from '@material-ui/icons/Home'
-import ListIcon from '@material-ui/icons/ViewList'
+
 import { Grid, Button, Badge } from '@material-ui/core'
 import { Link } from 'gatsby-theme-material-ui'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-
+import CartContext from '../context/CartContext'
 const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
@@ -87,45 +76,25 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Header = ({ siteTitle }) => {
+const Header = props => {
+  const { siteTitle } = props
   const classes = useStyles()
-
-  const theme = useTheme()
-  const [open, setOpen] = React.useState(false)
-
-  function handleDrawerOpen() {
-    setOpen(true)
-  }
-
-  function handleDrawerClose() {
-    setOpen(false)
-  }
-
+  console.log('props', props)
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        elevation={0}
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
+      <AppBar position="fixed" elevation={0} className={classes.appBar}>
         <Toolbar>
-          {/* <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton> */}
-          <Typography className={classes.title} variant="h6" color="inherit">
-            {siteTitle}
-          </Typography>
+          <Link to="/" color="inherit" className={classes.title}>
+            <Typography fontWeight="fontWeightBold" variant="h6">
+              {siteTitle}
+            </Typography>
+          </Link>
           <Button component={Link} to="/shop">
             Shop
+          </Button>{' '}
+          <Button component={Link} to="/portfolio">
+            Portfolio
           </Button>
           <Button component={Link} to="/about">
             About
@@ -134,9 +103,17 @@ const Header = ({ siteTitle }) => {
             Contact
           </Button>
           <IconButton component={Link} to="/cart">
-            <Badge variant="standard" color="secondary" badgeContent={2}>
-              <ShoppingCartIcon />
-            </Badge>
+            <CartContext.Consumer>
+              {({ cart }) => (
+                <Badge
+                  variant="standard"
+                  color="secondary"
+                  badgeContent={cart.length}
+                >
+                  <ShoppingCartIcon />
+                </Badge>
+              )}
+            </CartContext.Consumer>
           </IconButton>
         </Toolbar>
       </AppBar>

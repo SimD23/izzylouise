@@ -11,9 +11,9 @@ import { StaticQuery, graphql, Link } from 'gatsby'
 
 import Header from './header'
 import './layout.css'
-import { ThemeProvider } from '@material-ui/styles'
-import theme from '../theme'
+
 import { Grid, Typography } from '@material-ui/core'
+import CartContext from '../context/CartContext'
 
 const Layout = ({ children }) => {
   return (
@@ -39,12 +39,15 @@ const Layout = ({ children }) => {
             }}
           >
             <main>{children}</main>
-            <footer style={{ paddingTop: 10 }}>
+            <footer style={{ marginTop: '24px' }}>
               <Grid spacing={4} justify="center" container>
                 <Grid item xs={12}>
                   <Grid container justify="space-around">
                     <Grid item>
                       <Link to="/shop">Shop</Link>
+                    </Grid>
+                    <Grid item>
+                      <Link to="/portfolio">Portfolio</Link>
                     </Grid>
                     <Grid item>
                       <Link to="/about">About</Link>
@@ -55,7 +58,7 @@ const Layout = ({ children }) => {
                   </Grid>
                 </Grid>
                 <Grid item>
-                  <Typography variant="p" align="center">
+                  <Typography variant="body1" align="center">
                     © {new Date().getFullYear()}, Izzy Louise Davis
                   </Typography>
                 </Grid>
